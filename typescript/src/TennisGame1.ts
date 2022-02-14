@@ -18,25 +18,38 @@ export class TennisGame1 implements TennisGame {
       this.m_score2 += 1;
   }
 
+  getShortStringScore(score: string, tempScore: number): string {
+    switch (tempScore) {
+      case 0:
+        return score += 'Love';
+      case 1:
+        return score += 'Fifteen';
+      case 2:
+        return score += 'Thirty';
+      case 3:
+        return score += 'Forty';
+      default:
+        return "";
+    }
+  }
+  getStringScore(score: number): string {
+    switch (this.m_score1) {
+      case 0:
+        return 'Love-All';
+      case 1:
+        return 'Fifteen-All';
+      case 2:
+        return 'Thirty-All';
+      default:
+        return 'Deuce';
+    }
+  }
+
   getScore(): string {
     let score: string = '';
     let tempScore: number = 0;
     if (this.m_score1 === this.m_score2) {
-      switch (this.m_score1) {
-        case 0:
-          score = 'Love-All';
-          break;
-        case 1:
-          score = 'Fifteen-All';
-          break;
-        case 2:
-          score = 'Thirty-All';
-          break;
-        default:
-          score = 'Deuce';
-          break;
-
-      }
+      score = this.getStringScore(this.m_score1);
     }
     else if (this.m_score1 >= 4 || this.m_score2 >= 4) {
       const minusResult: number = this.m_score1 - this.m_score2;
@@ -49,20 +62,7 @@ export class TennisGame1 implements TennisGame {
       for (let i = 1; i < 3; i++) {
         if (i === 1) tempScore = this.m_score1;
         else { score += '-'; tempScore = this.m_score2; }
-        switch (tempScore) {
-          case 0:
-            score += 'Love';
-            break;
-          case 1:
-            score += 'Fifteen';
-            break;
-          case 2:
-            score += 'Thirty';
-            break;
-          case 3:
-            score += 'Forty';
-            break;
-        }
+        score += this.getShortStringScore(score, tempScore);
       }
     }
     return score;
